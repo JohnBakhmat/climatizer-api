@@ -1,0 +1,13 @@
+{
+  "name": "climatizer-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yevhenii <yevhenii.bakhmat@nure.ua>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^4.1.3",
+    "mongoose": "^6.0.10",
+    "typescript": "^4.4.4"
+  }
+}
