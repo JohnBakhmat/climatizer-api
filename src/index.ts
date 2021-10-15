@@ -1,9 +1,10 @@
 import express from "express";
 import { Request, Response } from "express";
-
+require('dotenv').config()
 const app = express();
-const port = 3011;
-const hostname = "192.168.0.106"
+
+const port = Number(process.env.SERVER_PORT);
+const hostname: string = process.env.SERVER_IP as string
 
 app.get("/", (req: Request, res: Response) => {
 	res.send({ data: "Hello World!" });
