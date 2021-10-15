@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node ."
+    "start": "prettier src -w && node ."
   },
   "dependencies": {
     "@types/node": "^16.11.0",
