@@ -5,7 +5,7 @@ const schema = new Schema({
   email: String,
   password: String,
   access: [{ type: Schema.Types.ObjectId, ref: 'Access' }],
-  presets: [{ type: Schema.Types.ObjectId, ref: 'Presets' }],
+  presets: [{ type: Schema.Types.ObjectId, ref: 'Presets' }]
 })
 const User = model('User', schema)
 

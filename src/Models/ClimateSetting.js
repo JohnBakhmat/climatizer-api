@@ -4,7 +4,7 @@ const schema = new Schema({
   _id: Schema.Types.ObjectId,
   expression: String,
   value: Number,
-  units: String,
+  units: String
 })
 const ClimateSetting = model('ClimateSetting', schema)
 

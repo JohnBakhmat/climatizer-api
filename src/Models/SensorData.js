@@ -3,7 +3,7 @@ const { model, Schema } = require('mongoose')
 const schema = new Schema({
   data: Number,
   units: String,
-  fetchTime: Date,
+  fetchTime: Date
 })
 const SensorData = model('SensorData', schema)
 

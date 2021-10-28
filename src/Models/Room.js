@@ -5,7 +5,7 @@ const schema = new Schema({
   title: String,
   description: String,
   devices: [{ type: Schema.Types.ObjectId, ref: 'Device' }],
-  access: [{ type: Schema.Types.ObjectId, ref: 'Access' }],
+  access: [{ type: Schema.Types.ObjectId, ref: 'Access' }]
 })
 const Room = model('Room', schema)
 
