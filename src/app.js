@@ -7,6 +7,7 @@ app.use(express.json())
 
 require('./Controllers/AuthController')(app)
 require('./Controllers/DeviceController')(app)
+require('./Controllers/SensorController')(app)
 
 // Logic goes here
 

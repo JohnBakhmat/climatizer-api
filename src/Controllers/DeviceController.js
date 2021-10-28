@@ -65,4 +65,16 @@ module.exports = (app) => {
       res.send(device)
     })
   })
+
+  app.delete('/device/:id',(req,res)=>{
+    const id = req.params.id;
+    Device.findByIdAndDelete(id, (err, device) => {
+      if (err) {
+        console.error(err)
+        res.sendStatus(400)
+        return
+      }
+      res.send(device)
+    })
+  })
 }
