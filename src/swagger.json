@@ -32,6 +32,35 @@
             "description": "unexpected error"
           }
 				}
+			},
+			"post":{
+				"description":"Create device",
+				"operationId":"postDevice",
+
+				"parameters":[
+					{
+						"name":"serialNumber",
+						"in":"body",
+						"description":"Device to add to the database",
+						"required":true,
+						"schema":{
+							"example":{
+								"serialNumber":"0000"
+							}
+						}
+					}
+				],
+				"responses":{
+					"200":{
+						"description":"Created device",
+						"schema":{
+							"type":"object"
+						}
+					},
+					"default": {
+            "description": "unexpected error"
+          }
+				}
 			}
 		}
 	}

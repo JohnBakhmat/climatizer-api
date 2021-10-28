@@ -11,6 +11,6 @@ mongoose.connect(MONGO_URI, (err) => {
   err && console.error(err)
   server.listen(port, () => {
     console.clear()
-    console.log(`Server running on port ${port}`)
+    console.log(`Server running on http://localhost:${port}`)
   })
 })
