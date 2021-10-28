@@ -1,0 +1,38 @@
+{
+	"swagger":"2.0",
+	"info":{
+		"version":"0.0.1",
+		"title":"Climatizer API",
+		"description" : "A project for ATARK that controlls climate",
+		"termsOfService":"http://swagger.io/terms/"
+	},
+	"host":"localhost:3099",
+	"schemes":[
+		"http"
+	],
+	"consumes":[
+		"application/json"
+	],
+	"produces":[
+		"application/json"
+	],
+	"paths":{
+		"/device":{
+			"get":{
+				"description":"Fetch all devices",
+				"operationId":"getDevices",
+				"responses":{
+					"200":{
+						"description":"Device list response",
+						"schema":{
+							"type":"array"
+						}
+					},
+					"default": {
+            "description": "unexpected error"
+          }
+				}
+			}
+		}
+	}
+}
