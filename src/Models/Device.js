@@ -7,4 +7,4 @@ const schema = new Schema({
 });
 const Device = model("Device", schema);
 
-module.exports =  Device;
+module.exports = Device;

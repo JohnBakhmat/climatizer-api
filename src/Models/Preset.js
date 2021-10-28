@@ -8,4 +8,4 @@ const schema = new Schema({
 });
 const Preset = model("Preset", schema);
 
-module.exports =  Preset;
+module.exports = Preset;

@@ -7,4 +7,4 @@ const schema = new Schema({
 });
 const Building = model("Building", schema);
 
-module.exports =  Building;
+module.exports = Building;

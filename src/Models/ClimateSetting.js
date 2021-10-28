@@ -8,4 +8,4 @@ const schema = new Schema({
 });
 const ClimateSetting = model("ClimateSetting", schema);
 
-module.exports =  ClimateSetting;
+module.exports = ClimateSetting;

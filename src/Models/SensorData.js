@@ -7,4 +7,4 @@ const schema = new Schema({
 });
 const SensorData = model("SensorData", schema);
 
-module.exports =  SensorData;
+module.exports = SensorData;

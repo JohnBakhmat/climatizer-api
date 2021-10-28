@@ -8,4 +8,4 @@ const schema = new Schema({
 });
 const Access = model("Access", schema);
 
-module.exports =  Access;
+module.exports = Access;

@@ -9,4 +9,4 @@ const schema = new Schema({
 });
 const Room = model("Room", schema);
 
-module.exports =  Room;
+module.exports = Room;

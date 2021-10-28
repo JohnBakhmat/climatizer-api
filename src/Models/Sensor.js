@@ -8,4 +8,4 @@ const schema = new Schema({
 });
 const Sensor = model("Sensor", schema);
 
-module.exports =  Sensor;
+module.exports = Sensor;
