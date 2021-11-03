@@ -1,67 +1,61 @@
 {
-	"swagger":"2.0",
-	"info":{
-		"version":"0.0.1",
-		"title":"Climatizer API",
-		"description" : "A project for ATARK that controlls climate",
-		"termsOfService":"http://swagger.io/terms/"
-	},
-	"host":"localhost:3099",
-	"schemes":[
-		"http"
-	],
-	"consumes":[
-		"application/json"
-	],
-	"produces":[
-		"application/json"
-	],
-	"paths":{
-		"/device":{
-			"get":{
-				"description":"Fetch all devices",
-				"operationId":"getDevices",
-				"responses":{
-					"200":{
-						"description":"Device list response",
-						"schema":{
-							"type":"array"
-						}
-					},
-					"default": {
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Climatizer API",
+    "description": "A project for ATARK that controlls climate",
+    "termsOfService": "http://swagger.io/terms/"
+  },
+  "host": "localhost:3099",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/device": {
+      "get": {
+        "description": "Fetch all devices",
+        "operationId": "getDevices",
+        "responses": {
+          "200": {
+            "description": "Device list response",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "default": {
             "description": "unexpected error"
           }
-				}
-			},
-			"post":{
-				"description":"Create device",
-				"operationId":"postDevice",
+        }
+      },
+      "post": {
+        "description": "Create device",
+        "operationId": "postDevice",
 
-				"parameters":[
-					{
-						"name":"serialNumber",
-						"in":"body",
-						"description":"Device to add to the database",
-						"required":true,
-						"schema":{
-							"example":{
-								"serialNumber":"0000"
-							}
-						}
-					}
-				],
-				"responses":{
-					"200":{
-						"description":"Created device",
-						"schema":{
-							"type":"object"
-						}
-					},
-					"default": {
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "body",
+            "description": "Device to add to the database",
+            "required": true,
+            "schema": {
+              "example": {
+                "serialNumber": "0000"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created device",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "default": {
             "description": "unexpected error"
           }
-				}
-			}
-		}
-	}
+        }
+      }
+    }
+  }
 }
