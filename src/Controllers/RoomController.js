@@ -40,7 +40,7 @@ module.exports = (app)=>{
 			res.sendStatus(400);
 		}
 	});
-	app.put('/room',(req,res)=>{
+	app.put('/room/:id',(req,res)=>{
 		if (!req.body) return res.sendStatus(400)
     const id = req.params.id;
     const body = req.body;
@@ -62,7 +62,7 @@ module.exports = (app)=>{
     }
 	});
 
-	app.delete('/room',(req,res)=>{
+	app.delete('/room/:id',(req,res)=>{
 		const id = req.params.id;
     Room.findByIdAndDelete(id, (err, room) => {
       if (err) {

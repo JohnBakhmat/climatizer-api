@@ -39,7 +39,7 @@ module.exports = (app)=>{
 			res.sendStatus(400);
 		}
 	});
-	app.put('/building',(req,res)=>{
+	app.put('/building/:id',(req,res)=>{
 		if (!req.body) return res.sendStatus(400)
     const id = req.params.id;
     const body = req.body;
@@ -60,7 +60,7 @@ module.exports = (app)=>{
     }
 	});
 
-	app.delete('/building',(req,res)=>{
+	app.delete('/building/:id',(req,res)=>{
 		const id = req.params.id;
     Building.findByIdAndDelete(id, (err, building) => {
       if (err) {
