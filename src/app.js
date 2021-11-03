@@ -8,9 +8,16 @@ app.use(express.json())
 app.use('/api-docs', swaggerUi.serve);
 app.use('/api-docs',swaggerUi.setup(swaggerDocument))
 
+require('./Controllers/AccessController')(app)
 require('./Controllers/AuthController')(app)
+require('./Controllers/BuildingController')(app)
+require('./Controllers/ClimateSettingController')(app)
 require('./Controllers/DeviceController')(app)
+require('./Controllers/PresetController')(app)
+require('./Controllers/RoomController')(app)
 require('./Controllers/SensorController')(app)
+require('./Controllers/SensorDataController')(app)
+
 
 // Logic goes here
 
