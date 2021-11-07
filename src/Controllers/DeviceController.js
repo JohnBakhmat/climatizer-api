@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 const Device = require('../Models/Device')
-
+const { verifyJwtToken } = require('../Middleware/JwtService')
 module.exports = (app) => {
   //Get all devices
-  app.get('/device', (req, res) => {
+  app.get('/device', verifyJwtToken, (req, res) => {
     Device.find({}, (err, devices) => {
       if (err) {
         console.error(err)
@@ -14,7 +14,7 @@ module.exports = (app) => {
     })
   })
 
-  app.post('/device', (req, res) => {
+  app.post('/device', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const serialNumber = req.body.serialNumber
     try {
@@ -32,7 +32,7 @@ module.exports = (app) => {
     }
   })
 
-  app.put('/device/:id', (req, res) => {
+  app.put('/device/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const serialNumber = req.body.serialNumber
@@ -57,7 +57,7 @@ module.exports = (app) => {
     }
   })
 
-  app.get('/device/:id', (req, res) => {
+  app.get('/device/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Device.findById(id, (err, device) => {
       if (err) {
@@ -69,7 +69,7 @@ module.exports = (app) => {
     })
   })
 
-  app.delete('/device/:id', (req, res) => {
+  app.delete('/device/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Device.findByIdAndDelete(id, (err, device) => {
       if (err) {

@@ -2,7 +2,7 @@ const { Types } = require('mongoose')
 const Access = require('../Models/Access')
 
 module.exports = (app) => {
-  app.get('/access', (req, res) => {
+  app.get('/access', verifyJwtToken, (req, res) => {
     Access.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
@@ -12,7 +12,7 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/access/:id', (req, res) => {
+  app.get('/access/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Access.findById(id, (err, room) => {
       if (err) {
@@ -23,7 +23,7 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/access', (req, res) => {
+  app.post('/access', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
@@ -41,7 +41,7 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/access/:id', (req, res) => {
+  app.put('/access/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
@@ -68,7 +68,7 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/access/:id', (req, res) => {
+  app.delete('/access/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Access.findByIdAndDelete(id, (err, room) => {
       if (err) {

@@ -2,7 +2,7 @@ const { Types } = require('mongoose')
 const Building = require('../Models/Building')
 
 module.exports = (app) => {
-  app.get('/building', (req, res) => {
+  app.get('/building', verifyJwtToken, (req, res) => {
     Building.find({}, (err, buildings) => {
       if (err) {
         console.error(err)
@@ -12,7 +12,7 @@ module.exports = (app) => {
       res.send(buildings)
     })
   })
-  app.get('/building/:id', (req, res) => {
+  app.get('/building/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Building.findById(id, (err, building) => {
       if (err) {
@@ -23,7 +23,7 @@ module.exports = (app) => {
       res.send(building)
     })
   })
-  app.post('/building', (req, res) => {
+  app.post('/building', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
@@ -39,7 +39,7 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/building/:id', (req, res) => {
+  app.put('/building/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
@@ -64,7 +64,7 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/building/:id', (req, res) => {
+  app.delete('/building/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Building.findByIdAndDelete(id, (err, building) => {
       if (err) {

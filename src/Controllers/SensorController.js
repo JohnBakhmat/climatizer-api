@@ -2,7 +2,7 @@ const { Types } = require('mongoose')
 const Sensor = require('../Models/Sensor')
 
 module.exports = (app) => {
-  app.get('/sensor', (req, res) => {
+  app.get('/sensor', verifyJwtToken, (req, res) => {
     Sensor.find({}, (err, sensors) => {
       if (err) {
         console.error(err)
@@ -13,7 +13,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/sensor/:id', (req, res) => {
+  app.get('/sensor/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Sensor.findById(id, (err, sensor) => {
       if (err) {
@@ -24,7 +24,7 @@ module.exports = (app) => {
       res.send(sensor)
     })
   })
-  app.post('/sensor', (req, res) => {
+  app.post('/sensor', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
@@ -42,7 +42,7 @@ module.exports = (app) => {
       console.error(error)
     }
   })
-  app.put('/sensor/:id', (req, res) => {
+  app.put('/sensor/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
@@ -67,7 +67,7 @@ module.exports = (app) => {
       console.error(err)
     }
   })
-  app.delete('/sensor/:id', (req, res) => {
+  app.delete('/sensor/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Sensor.findOneAndDelete({ _id: id }, (err, sensor) => {
       if (err) {

@@ -1,8 +1,9 @@
 const { Types } = require('mongoose')
 const Preset = require('../Models/Preset')
+const { verifyJwtToken } = require('../Middleware/JwtService')
 
 module.exports = (app) => {
-  app.get('/preset', (req, res) => {
+  app.get('/preset', verifyJwtToken, (req, res) => {
     Preset.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
@@ -12,7 +13,7 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/preset/:id', (req, res) => {
+  app.get('/preset/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Preset.findById(id, (err, room) => {
       if (err) {
@@ -23,7 +24,7 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/preset', (req, res) => {
+  app.post('/preset', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
@@ -40,13 +41,13 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/preset/:id', (req, res) => {
+  app.put('/preset/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
 
     try {
-      const newPreset = new Room({
+      const newPreset = new Preset({
         _id: id,
         title: body.title,
         description: body.description
@@ -66,7 +67,7 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/preset/:id', (req, res) => {
+  app.delete('/preset/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     Preset.findByIdAndDelete(id, (err, room) => {
       if (err) {

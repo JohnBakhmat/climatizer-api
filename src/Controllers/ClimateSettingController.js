@@ -2,7 +2,7 @@ const { Types } = require('mongoose')
 const ClimateSetting = require('../Models/ClimateSetting')
 
 module.exports = (app) => {
-  app.get('/climateSetting', (req, res) => {
+  app.get('/climateSetting', verifyJwtToken, (req, res) => {
     ClimateSetting.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
@@ -12,7 +12,7 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/climateSetting/:id', (req, res) => {
+  app.get('/climateSetting/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     ClimateSetting.findById(id, (err, room) => {
       if (err) {
@@ -23,7 +23,7 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/climateSetting', (req, res) => {
+  app.post('/climateSetting', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
@@ -41,7 +41,7 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/climateSetting/:id', (req, res) => {
+  app.put('/climateSetting/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
@@ -68,7 +68,7 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/climateSetting/:id', (req, res) => {
+  app.delete('/climateSetting/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
     ClimateSetting.findByIdAndDelete(id, (err, room) => {
       if (err) {
