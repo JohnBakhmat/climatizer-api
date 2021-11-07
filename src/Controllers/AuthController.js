@@ -18,7 +18,14 @@ module.exports = (app) => {
         } else if (err) {
           res.status(500).send(err)
         } else {
+<<<<<<< HEAD
           signJwtToken(body, config, res)
+=======
+          jwt.sign(body, JWT_PRIVATE_KEY, config, (error, token) => {
+            if (error) res.status(500).send(error)
+            res.status(200).send({ idToken: token })
+          })
+>>>>>>> b31c3145d2c568d5242cea2529dcb9b43ea01e8d
         }
       }
     )
@@ -49,7 +56,14 @@ module.exports = (app) => {
               res.status(500).send(error)
             }
           })
+<<<<<<< HEAD
           signJwtToken(body, config, res)
+=======
+          jwt.sign(body, JWT_PRIVATE_KEY, config, (error, token) => {
+            if (error) res.status(500).send(error)
+            res.send({ idToken: token })
+          })
+>>>>>>> b31c3145d2c568d5242cea2529dcb9b43ea01e8d
         }
       }
     )
