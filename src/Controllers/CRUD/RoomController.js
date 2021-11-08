@@ -1,9 +1,10 @@
 const { Types } = require('mongoose')
-const Access = require('../Models/Access')
+const Room = require('../Models/Room')
+const { verifyJwtToken } = require('../Middleware/JwtService')
 
 module.exports = (app) => {
-  app.get('/access', verifyJwtToken, (req, res) => {
-    Access.find({}, (err, rooms) => {
+  app.get('/room', verifyJwtToken, (req, res) => {
+    Room.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -12,9 +13,9 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/access/:id', verifyJwtToken, (req, res) => {
+  app.get('/room/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    Access.findById(id, (err, room) => {
+    Room.findById(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -23,17 +24,16 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/access', verifyJwtToken, (req, res) => {
+  app.post('/room', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
-      const newAccess = new Access({
+      const newRoom = new Room({
         _id: Types.ObjectId(),
-        room: body.roomId,
-        user: body.userId,
-        isAllowed: true
+        title: body?.title,
+        description: body.description
       })
-      newAccess.save((error) => {
+      newRoom.save((error) => {
         throw error
       })
     } catch (e) {
@@ -41,22 +41,21 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/access/:id', verifyJwtToken, (req, res) => {
+  app.put('/room/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
 
     try {
-      const newAccess = new Room({
+      const newRoom = new Room({
         _id: id,
-        room: body.roomId,
-        user: body.userId,
-        isAllowed: true
+        title: body.title,
+        description: body.description
       })
 
-      Access.findOneAndUpdate(
+      Room.findOneAndUpdate(
         { _id: id },
-        newAccess,
+        newRoom,
         { new: true },
         (err, room) => {
           if (err) return console.log(err)
@@ -68,9 +67,9 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/access/:id', verifyJwtToken, (req, res) => {
+  app.delete('/room/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    Access.findByIdAndDelete(id, (err, room) => {
+    Room.findByIdAndDelete(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)

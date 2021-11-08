@@ -1,9 +1,10 @@
 const { Types } = require('mongoose')
-const Room = require('../Models/Room')
+const SensorData = require('../Models/SensorData')
+const { verifyJwtToken } = require('../Middleware/JwtService')
 
 module.exports = (app) => {
-  app.get('/room', verifyJwtToken, (req, res) => {
-    Room.find({}, (err, rooms) => {
+  app.get('/sensorData', verifyJwtToken, (req, res) => {
+    SensorData.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -12,9 +13,9 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/room/:id', verifyJwtToken, (req, res) => {
+  app.get('/sensorData/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    Room.findById(id, (err, room) => {
+    SensorData.findById(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -23,16 +24,17 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/room', verifyJwtToken, (req, res) => {
+  app.post('/sensorData', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
-      const newRoom = new Room({
+      const newSensorData = new SensorData({
         _id: Types.ObjectId(),
-        title: body?.title,
-        description: body.description
+        data: body.data,
+        units: body.units,
+        fetchTime: new Date()
       })
-      newRoom.save((error) => {
+      newSensorData.save((error) => {
         throw error
       })
     } catch (e) {
@@ -40,21 +42,22 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/room/:id', verifyJwtToken, (req, res) => {
+  app.put('/sensorData/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
 
     try {
-      const newRoom = new Room({
+      const newSensorData = new Room({
         _id: id,
-        title: body.title,
-        description: body.description
+        data: body.data,
+        units: body.units,
+        fetchTime: body.fetchTime
       })
 
-      Room.findOneAndUpdate(
+      SensorData.findOneAndUpdate(
         { _id: id },
-        newRoom,
+        newSensorData,
         { new: true },
         (err, room) => {
           if (err) return console.log(err)
@@ -66,9 +69,9 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/room/:id', verifyJwtToken, (req, res) => {
+  app.delete('/sensorData/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    Room.findByIdAndDelete(id, (err, room) => {
+    SensorData.findByIdAndDelete(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)

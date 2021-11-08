@@ -1,9 +1,10 @@
 const { Types } = require('mongoose')
-const ClimateSetting = require('../Models/ClimateSetting')
+const Access = require('../../Models/Access')
+const { verifyJwtToken } = require('../Middleware/JwtService')
 
 module.exports = (app) => {
-  app.get('/climateSetting', verifyJwtToken, (req, res) => {
-    ClimateSetting.find({}, (err, rooms) => {
+  app.get('/access', verifyJwtToken, (req, res) => {
+    Access.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -12,9 +13,9 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/climateSetting/:id', verifyJwtToken, (req, res) => {
+  app.get('/access/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    ClimateSetting.findById(id, (err, room) => {
+    Access.findById(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -23,17 +24,17 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/climateSetting', verifyJwtToken, (req, res) => {
+  app.post('/access', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
-      const newClimateSetting = new ClimateSetting({
+      const newAccess = new Access({
         _id: Types.ObjectId(),
-        expression: body.expression,
-        value: body.value,
-        units: body.units
+        room: body.roomId,
+        user: body.userId,
+        isAllowed: true
       })
-      newClimateSetting.save((error) => {
+      newAccess.save((error) => {
         throw error
       })
     } catch (e) {
@@ -41,22 +42,22 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/climateSetting/:id', verifyJwtToken, (req, res) => {
+  app.put('/access/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
 
     try {
-      const newClimateSetting = new Room({
+      const newAccess = new Room({
         _id: id,
-        expression: body.expression,
-        value: body.value,
-        units: body.units
+        room: body.roomId,
+        user: body.userId,
+        isAllowed: true
       })
 
-      ClimateSetting.findOneAndUpdate(
+      Access.findOneAndUpdate(
         { _id: id },
-        newClimateSetting,
+        newAccess,
         { new: true },
         (err, room) => {
           if (err) return console.log(err)
@@ -68,9 +69,9 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/climateSetting/:id', verifyJwtToken, (req, res) => {
+  app.delete('/access/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    ClimateSetting.findByIdAndDelete(id, (err, room) => {
+    Access.findByIdAndDelete(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)

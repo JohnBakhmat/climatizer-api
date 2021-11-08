@@ -1,5 +1,6 @@
 const { Types } = require('mongoose')
 const Sensor = require('../Models/Sensor')
+const { verifyJwtToken } = require('../Middleware/JwtService')
 
 module.exports = (app) => {
   app.get('/sensor', verifyJwtToken, (req, res) => {

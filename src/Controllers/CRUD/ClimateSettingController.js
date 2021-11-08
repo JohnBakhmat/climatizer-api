@@ -1,9 +1,10 @@
 const { Types } = require('mongoose')
-const SensorData = require('../Models/SensorData')
+const ClimateSetting = require('../Models/ClimateSetting')
+const { verifyJwtToken } = require('../Middleware/JwtService')
 
 module.exports = (app) => {
-  app.get('/sensorData', verifyJwtToken, (req, res) => {
-    SensorData.find({}, (err, rooms) => {
+  app.get('/climateSetting', verifyJwtToken, (req, res) => {
+    ClimateSetting.find({}, (err, rooms) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -12,9 +13,9 @@ module.exports = (app) => {
       res.send(rooms)
     })
   })
-  app.get('/sensorData/:id', verifyJwtToken, (req, res) => {
+  app.get('/climateSetting/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    SensorData.findById(id, (err, room) => {
+    ClimateSetting.findById(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
@@ -23,17 +24,17 @@ module.exports = (app) => {
       res.send(room)
     })
   })
-  app.post('/sensorData', verifyJwtToken, (req, res) => {
+  app.post('/climateSetting', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const body = req.body
     try {
-      const newSensorData = new SensorData({
+      const newClimateSetting = new ClimateSetting({
         _id: Types.ObjectId(),
-        data: body.data,
-        units: body.units,
-        fetchTime: new Date()
+        expression: body.expression,
+        value: body.value,
+        units: body.units
       })
-      newSensorData.save((error) => {
+      newClimateSetting.save((error) => {
         throw error
       })
     } catch (e) {
@@ -41,22 +42,22 @@ module.exports = (app) => {
       res.sendStatus(400)
     }
   })
-  app.put('/sensorData/:id', verifyJwtToken, (req, res) => {
+  app.put('/climateSetting/:id', verifyJwtToken, (req, res) => {
     if (!req.body) return res.sendStatus(400)
     const id = req.params.id
     const body = req.body
 
     try {
-      const newSensorData = new Room({
+      const newClimateSetting = new Room({
         _id: id,
-        data: body.data,
-        units: body.units,
-        fetchTime: body.fetchTime
+        expression: body.expression,
+        value: body.value,
+        units: body.units
       })
 
-      SensorData.findOneAndUpdate(
+      ClimateSetting.findOneAndUpdate(
         { _id: id },
-        newSensorData,
+        newClimateSetting,
         { new: true },
         (err, room) => {
           if (err) return console.log(err)
@@ -68,9 +69,9 @@ module.exports = (app) => {
     }
   })
 
-  app.delete('/sensorData/:id', verifyJwtToken, (req, res) => {
+  app.delete('/climateSetting/:id', verifyJwtToken, (req, res) => {
     const id = req.params.id
-    SensorData.findByIdAndDelete(id, (err, room) => {
+    ClimateSetting.findByIdAndDelete(id, (err, room) => {
       if (err) {
         console.error(err)
         res.sendStatus(400)
