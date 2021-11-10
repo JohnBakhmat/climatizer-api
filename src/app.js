@@ -10,14 +10,14 @@ app.use('/api-docs', swaggerUi.setup(swaggerDocument))
 
 require('./Services/AuthService')(app)
 
-require('./Services/AccessService')(app)
-require('./Services/BuildingService')(app)
-require('./Services/ClimateSettingService')(app)
-require('./Services/DeviceService')(app)
-require('./Services/PresetService')(app)
-require('./Services/RoomService')(app)
-require('./Services/SensorService')(app)
-require('./Services/SensorDataService')(app)
+require('./Services/CRUD/AccessService')(app)
+require('./Services/CRUD/BuildingService')(app)
+require('./Services/CRUD/ClimateSettingService')(app)
+require('./Services/CRUD/DeviceService')(app)
+require('./Services/CRUD/PresetService')(app)
+require('./Services/CRUD/RoomService')(app)
+require('./Services/CRUD/SensorService')(app)
+require('./Services/CRUD/SensorDataService')(app)
 
 // Logic goes here
 

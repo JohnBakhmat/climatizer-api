@@ -1,6 +1,6 @@
 const { Types } = require('mongoose')
-const SensorData = require('../Models/SensorData')
-const { verifyJwtToken } = require('../Middleware/JwtService')
+const SensorData = require('../../Models/SensorData')
+const { verifyJwtToken } = require('../../Middleware/JwtService')
 
 module.exports = (app) => {
   app.get('/sensorData', verifyJwtToken, (req, res) => {
@@ -35,7 +35,7 @@ module.exports = (app) => {
         fetchTime: new Date()
       })
       newSensorData.save((error) => {
-        throw error
+        console.error(error)
       })
     } catch (e) {
       console.error(e)

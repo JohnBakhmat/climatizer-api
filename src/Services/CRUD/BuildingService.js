@@ -1,6 +1,6 @@
 const { Types } = require('mongoose')
-const Building = require('../Models/Building')
-const { verifyJwtToken } = require('../Middleware/JwtService')
+const Building = require('../../Models/Building')
+const { verifyJwtToken } = require('../../Middleware/JwtService')
 
 module.exports = (app) => {
   app.get('/building', verifyJwtToken, (req, res) => {

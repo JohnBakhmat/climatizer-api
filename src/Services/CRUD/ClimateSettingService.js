@@ -1,6 +1,6 @@
 const { Types } = require('mongoose')
-const ClimateSetting = require('../Models/ClimateSetting')
-const { verifyJwtToken } = require('../Middleware/JwtService')
+const ClimateSetting = require('../../Models/ClimateSetting')
+const { verifyJwtToken } = require('../../Middleware/JwtService')
 
 module.exports = (app) => {
   app.get('/climateSetting', verifyJwtToken, (req, res) => {

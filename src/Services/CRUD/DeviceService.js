@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Device = require('../Models/Device')
-const { verifyJwtToken } = require('../Middleware/JwtService')
+const Device = require('../../Models/Device')
+const { verifyJwtToken } = require('../../Middleware/JwtService')
 module.exports = (app) => {
   //Get all devices
   app.get('/device', verifyJwtToken, (req, res) => {

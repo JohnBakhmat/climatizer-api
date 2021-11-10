@@ -1,6 +1,6 @@
 const { Types } = require('mongoose')
-const Preset = require('../Models/Preset')
-const { verifyJwtToken } = require('../Middleware/JwtService')
+const Preset = require('../../Models/Preset')
+const { verifyJwtToken } = require('../../Middleware/JwtService')
 
 module.exports = (app) => {
   app.get('/preset', verifyJwtToken, (req, res) => {
