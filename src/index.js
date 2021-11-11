@@ -7,7 +7,7 @@ const server = http.createServer(app)
 const { API_PORT } = process.env
 const port = API_PORT || 3030
 
-require('./Services/Sockets/DeviceSocketService')(server)
+require('./Services/Sockets/SocketService')(server)
 require('./Data/MongoService')(() => {
   server.listen(port, () => {
     console.clear()
