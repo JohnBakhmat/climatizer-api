@@ -35,7 +35,7 @@ module.exports = (app) => {
         isAllowed: true
       })
       newAccess.save((error) => {
-        throw error
+        error && console.error(error)
       })
     } catch (e) {
       console.error(e)
@@ -52,7 +52,7 @@ module.exports = (app) => {
         _id: id,
         room: body.roomId,
         user: body.userId,
-        isAllowed: true
+        isAllowed: body.isAllowed
       })
 
       Access.findOneAndUpdate(

@@ -34,7 +34,7 @@ module.exports = (app) => {
         description: body.description
       })
       newRoom.save((error) => {
-        throw error
+        console.log(error)
       })
     } catch (e) {
       console.error(e)

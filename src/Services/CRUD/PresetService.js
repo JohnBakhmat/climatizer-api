@@ -34,8 +34,9 @@ module.exports = (app) => {
         description: body.description
       })
       newPreset.save((error) => {
-        throw error
+        error && console.error(error)
       })
+      res.sendStatus(200)
     } catch (e) {
       console.error(e)
       res.sendStatus(400)
