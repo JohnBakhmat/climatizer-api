@@ -6,10 +6,10 @@ const server = http.createServer(app)
 
 const { API_PORT } = process.env
 const port = API_PORT || 3030
-
+const host = '192.168.0.106'
 require('./Data/MongoService')(() => {
-  server.listen(port, () => {
+  server.listen(port, host, () => {
     console.clear()
-    console.log(`Server running on http://localhost:${port}`)
+    console.log(`Server running on http://192.168.0.106:${port}`)
   })
 })

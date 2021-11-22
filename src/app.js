@@ -1,5 +1,7 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
+
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
 
@@ -7,6 +9,12 @@ const app = express()
 app.use(express.json())
 app.use('/api-docs', swaggerUi.serve)
 app.use('/api-docs', swaggerUi.setup(swaggerDocument))
+app.use(
+  cors({
+    origin: '*'
+  })
+)
+
 require('./Services/AuthService')(app)
 require('./Services/CRUD/AccessService')(app)
 require('./Services/CRUD/BuildingService')(app)
