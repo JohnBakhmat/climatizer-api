@@ -1,6 +1,10 @@
 const Users = require('../Models/User')
 const mongoose = require('mongoose')
-const { signJwtToken } = require('../Middleware/JwtService')
+const {
+  signJwtToken,
+  verifyJwtToken,
+  validateBodyToken
+} = require('../Middleware/JwtService')
 
 module.exports = (app) => {
   // Register
@@ -53,6 +57,36 @@ module.exports = (app) => {
         }
       }
     )
+  })
+  app.post('/auth/renew', (req, res) => {
+    const idToken = req.body.idToken
+    validateBodyToken(idToken, (status, data) => {
+      if (status === 'SUCCESS') {
+        Users.findOne(
+          { email: data.email, password: data.password },
+          (err, user) => {
+            if (!user) {
+              res.status(404).send("User wasn't found!")
+            } else if (err) {
+              res.status(500).send(err)
+            } else {
+              const data = {
+                _id: user.id,
+                email: user.email,
+                role: user.role,
+                access: user.access,
+                presets: user.presets
+              }
+              res.status(200).send(data)
+            }
+          }
+        )
+
+        // res.status(200).send(data)
+      } else if (status === 'ERROR') {
+        res.status(402).send(data)
+      }
+    })
   })
 }
 

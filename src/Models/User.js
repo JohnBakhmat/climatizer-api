@@ -4,6 +4,7 @@ const schema = new Schema({
   _id: Schema.Types.ObjectId,
   email: String,
   password: String,
+  role: { type: String, default: 'customer' },
   access: [{ type: Schema.Types.ObjectId, ref: 'Access' }],
   presets: [{ type: Schema.Types.ObjectId, ref: 'Presets' }]
 })

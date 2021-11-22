@@ -24,7 +24,17 @@ const verifyJwtToken = (req, res, next) => {
     res.sendStatus(401)
   }
 }
+const validateBodyToken = (token, callback) => {
+  jwt.verify(token, JWT_PRIVATE_KEY, (err, user) => {
+    if (err) {
+      callback('ERROR', err)
+    } else {
+      callback('SUCCESS', user)
+    }
+  })
+}
 module.exports = {
   signJwtToken,
-  verifyJwtToken
+  verifyJwtToken,
+  validateBodyToken
 }
