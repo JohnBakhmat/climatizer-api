@@ -1,5 +1,6 @@
 const { Types } = require('mongoose')
 const Access = require('../../Models/Access')
+const Room = require('../../Models/Room')
 const { verifyJwtToken } = require('../../Middleware/JwtService')
 
 module.exports = (app) => {
@@ -48,10 +49,10 @@ module.exports = (app) => {
     const body = req.body
 
     try {
-      const newAccess = new Room({
+      const newAccess = new Access({
         _id: id,
-        room: body.roomId,
-        user: body.userId,
+        room: new Types.ObjectId(body.room),
+        user: new Types.ObjectId(body.user),
         isAllowed: body.isAllowed
       })
 
@@ -59,9 +60,9 @@ module.exports = (app) => {
         { _id: id },
         newAccess,
         { new: true },
-        (err, room) => {
+        (err, access) => {
           if (err) return console.log(err)
-          res.send(room)
+          res.send(access)
         }
       )
     } catch (err) {
