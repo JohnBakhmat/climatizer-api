@@ -6,34 +6,35 @@ const handleBackupCreation = () => {
   const timeStamp = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
   const backupProcess = spawn('mongodump', [
     '--db=test',
-    `--archive=./backups/${timeStamp}.gz`,
-    '--gzip'
+    `--out=src/Data/backups/${timeStamp}`
+    // '--gzip'
   ])
 
   backupProcess.on('exit', (code, signal) => {
     if (code) console.log('Backup process exited with code ', code)
     else if (signal)
       console.error('Backup process was killed with singal ', signal)
-    else console.log('Successfully backedup the database')
+    else console.log(`Successfully backedup the database ${timeStamp}.gz`)
   })
 }
 
-const restoreLastBackup = (date) => {
-  const timeStamp = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
+const restoreBackup = (backup, callback) => {
   const backupProcess = spawn('mongorestore', [
     '--db=test',
-    `--archive=./backups/${timeStamp}.gz`,
-    '--gzip'
+    `src/Data/backups/${backup}/test`
   ])
   backupProcess.on('exit', (code, signal) => {
     if (code) console.log('Backup process exited with code ', code)
     else if (signal)
       console.error('Backup process was killed with singal ', signal)
-    else console.log('Successfully backedup the database')
+    else callback('Successfully backedup the database')
   })
 }
 
-const dbBackupTask = cron.schedule('59 23 * * *', () => {
+const dbBackupTask = cron.schedule('59 */2 * * * *', () => {
   handleBackupCreation()
 })
-// console.log(dbBackupTask)
+
+module.exports = {
+  restoreBackup
+}

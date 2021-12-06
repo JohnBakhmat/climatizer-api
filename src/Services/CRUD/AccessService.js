@@ -31,8 +31,8 @@ module.exports = (app) => {
     try {
       const newAccess = new Access({
         _id: Types.ObjectId(),
-        room: body.roomId,
-        user: body.userId,
+        room: Types.ObjectId(body.room),
+        user: Types.ObjectId(body.user),
         isAllowed: true
       })
       newAccess.save((error) => {

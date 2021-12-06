@@ -9,6 +9,16 @@ const { Types } = require('mongoose')
 //
 socket = null
 module.exports = (app) => {
+  app.get('/request', verifyJwtToken, (req, res) => {
+    Request.find({}, (err, request) => {
+      if (err) {
+        console.error(err)
+        res.sendStatus(400)
+        return
+      }
+      res.send(request)
+    })
+  })
   app.post('/request/create', verifyJwtToken, (req, res) => {
     const { presetId, userId, roomId } = req.body
 
@@ -23,12 +33,12 @@ module.exports = (app) => {
     })
     Promise.all([roomPromise, userPromise]).then(([room, user]) => {
       Access.findOne({ roomId: roomId, userid: userId }, (err, access) => {
-        if (!access || !access.isAllowed) {
+        if ((!access || !access.isAllowed) && user.role !== 'admin') {
           return res.status(500).send('You have no access to this room!')
         } else {
           Promise.all([presetPromise]).then((preset) => {
             const body = {
-              devices: room.devices,
+              devices: room?.devices,
               user: userId,
               fetchTime: Date.now(),
               status: 'In Progress'

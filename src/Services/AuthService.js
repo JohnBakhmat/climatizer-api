@@ -11,6 +11,7 @@ module.exports = (app) => {
   app.post('/auth/login', (req, res) => {
     // our register logic goes here...
     const body = req.body
+    console.log(body)
     const config = {
       algorithm: 'HS256'
     }

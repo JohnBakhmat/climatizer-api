@@ -33,7 +33,7 @@ module.exports = (app) => {
         address: body.address
       })
       newBuilding.save((error) => {
-        throw error
+        console.error(error)
       })
     } catch (e) {
       console.error(e)
