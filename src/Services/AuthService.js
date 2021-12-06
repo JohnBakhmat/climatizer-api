@@ -15,7 +15,8 @@ module.exports = (app) => {
     // our register logic goes here...
     const body = req.body
     const deviceType = device(req.headers['user-agent']).type
-
+    console.log(body)
+    console.log(deviceType)
     const config = {
       algorithm: 'HS256'
     }
@@ -28,6 +29,7 @@ module.exports = (app) => {
           res.status(500).send(err)
         } else {
           signJwtToken(body, config, res)
+
           new StatEvent({
             _id: mongoose.Types.ObjectId(),
             type: 'Login',
