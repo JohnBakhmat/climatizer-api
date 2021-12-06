@@ -1,17 +1,21 @@
 const Users = require('../Models/User')
 const mongoose = require('mongoose')
+const device = require('device')
+const fs = require('fs')
 const {
   signJwtToken,
   verifyJwtToken,
   validateBodyToken
 } = require('../Middleware/JwtService')
+const StatEvent = require('../Models/StatEvent')
 
 module.exports = (app) => {
   // Register
   app.post('/auth/login', (req, res) => {
     // our register logic goes here...
     const body = req.body
-    console.log(body)
+    const deviceType = device(req.headers['user-agent']).type
+
     const config = {
       algorithm: 'HS256'
     }
@@ -24,6 +28,16 @@ module.exports = (app) => {
           res.status(500).send(err)
         } else {
           signJwtToken(body, config, res)
+          new StatEvent({
+            _id: mongoose.Types.ObjectId(),
+            type: 'Login',
+            dateTime: Date.now(),
+            deviceType: deviceType
+          }).save((error) => {
+            if (error) {
+              res.status(500).send(error)
+            }
+          })
         }
       }
     )
