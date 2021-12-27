@@ -26,6 +26,11 @@ require('./Services/CRUD/RoomService')(app)
 require('./Services/CRUD/SensorService')(app)
 require('./Services/CRUD/SensorDataService')(app)
 require('./Data/BackupService')(app)
+
+//BusinessLayer
 require('./BusinessLayer/RequestService')(app)
+require('./BusinessLayer/MobileService')(app)
+require('./BusinessLayer/DeviceService')(app)
+
 require('./Services/StatisticsService')(app)
 module.exports = app
